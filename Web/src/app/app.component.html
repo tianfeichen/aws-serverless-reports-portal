@@ -1,0 +1,13 @@
+<div id="header">
+  <div [class.embedded]="isInIframe">
+    <!-- <img src="../assets/logo.png" alt="Logo" /> -->
+    <h1>Customer Portal</h1>
+  </div>
+  <div class="clear-fix"></div>
+  <amplify-auth-greetings>
+  </amplify-auth-greetings>
+</div>
+
+<div [class.embedded]="isInIframe">
+  <router-outlet></router-outlet>
+</div>

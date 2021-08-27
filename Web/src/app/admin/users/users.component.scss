@@ -1,0 +1,37 @@
+.invite {
+  margin: 0 0 16px 0;
+}
+
+.filter {
+  margin: 12px 0 0 24px;
+}
+
+tr.user-row:not(.expanded-row):hover {
+  background: #aaa;
+  cursor: pointer;
+}
+
+tr.user-row:not(.expanded-row):active {
+  background: #efefef;
+}
+
+.user-row td {
+  border-bottom-width: 0;
+}
+
+tr.detail-row {
+  height: 0;
+}
+
+.user-details {
+  overflow: hidden;
+  display: flex;
+}
+
+.user-description {
+  padding: 16px;
+}
+
+.center {
+  text-align: center;
+}

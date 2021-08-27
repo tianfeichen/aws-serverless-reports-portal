@@ -1,0 +1,34 @@
+/* You can add global styles to this file, and also import other style files */
+
+// Amplify
+@import "~@aws-amplify/ui/src/Theme.css";
+@import "~@aws-amplify/ui/src/Angular.css";
+@import "~@aws-amplify/ui/dist/style.css";
+
+@import './styles-material.scss';
+@include mat-core();
+
+// Roll back some styles introduced by Amplify
+span {
+  color: inherit;
+}
+
+// Change default Amplify theme
+:root {
+  /* Colors */
+  --light-blue: #6bace6;
+
+  /* Theme */
+  --button-background-color: #3f93df;
+
+  /** Angular Theme **/
+  --color-primary: #0099FF;
+  --color-primary-highlight: var(--light-blue);
+  --color-accent: mat-palette($mat-deep-blue, A200, A100, A400);
+}
+
+// Define them in scss too
+$light-blue: #6bace6;
+$button-background-color: #3f93df;
+$color-primary: #0099FF;
+$color-primary-highlight: var(--light-blue);

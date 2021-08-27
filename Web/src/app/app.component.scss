@@ -1,0 +1,52 @@
+$break-small: 640px;
+
+:host {
+
+  #header {
+    margin-bottom: 20px;
+  }
+
+  @media screen and (max-width: $break-small) {
+
+    img {
+      height:40px;
+      float: left;
+      margin-right: 10px;
+    }
+
+    h1 {
+      line-height: 40px;
+      font-size: 25px;
+      color: #013161;
+    }
+
+
+  }
+
+  @media screen and (min-width: $break-small) {
+
+    img {
+      height:80px;
+      float: left;
+      margin-right: 20px;
+    }
+
+    h1 {
+      line-height: 80px;
+      font-size: 50px;
+      color: #013161;
+    }
+
+  }
+
+
+  .clear-fix {
+    clear:both;
+  }
+
+  #header {
+    .embedded {
+      display: none;
+    }
+  }
+}

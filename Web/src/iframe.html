@@ -1,0 +1,20 @@
+<iframe id="customer-portal" src="http://localhost:4200"></iframe>
+
+<style>
+  iframe {
+     width: 640px;
+     height: 800px;
+     resize: both;
+     overflow: hidden;
+  }
+</style>
+
+<script>
+  var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+  var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  if (w < 700) {
+    var iframe = document.getElementById('customer-portal');
+    iframe.style.width = '380px';
+    iframe.style.height = '600px';
+  }
+</script>

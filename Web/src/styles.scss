@@ -1,0 +1,75 @@
+@import "src/styles-amplify";
+
+$break-small: 420px;
+
+body {
+  margin: 0;
+}
+
+h1, h2 {
+  margin: 0;
+}
+
+.basic-container {
+  padding: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: $color-primary;
+}
+
+.mat-snack-bar-container {
+  &.success {
+    background: #5cb85c;
+    color: white;
+  }
+  &.error {
+    background: #cc3300;
+    color: white;
+  }
+  .mat-simple-snackbar {
+    justify-content: center;
+  }
+}
+
+.mat-table {
+  background-color: inherit;
+  font-family: inherit;
+}
+.mat-list-item {
+  font-family: inherit;
+}
+
+.users-table, .products-table {
+  th.mat-header-cell {
+    padding: 0 0.2rem;
+  }
+  td.mat-cell {
+    padding: 0 0.2rem;
+  }
+  td.mat-cell.mat-column-reportId {
+    padding-left: 0.5rem;
+    padding-right: 0;
+  }
+}
+
+.amplify-greeting {
+  display: block;
+  float: right;
+
+  .amplify-greeting-text {
+    display: none;
+  }
+}
+
+// styles for mobile break point
+@media screen and (max-width: $break-small) {
+  .amplify-form-input {
+    min-width: 90%;
+    width: 280px;
+  }
+  // styles for iframe embedded mode
+  .embedded {
+  }
+}

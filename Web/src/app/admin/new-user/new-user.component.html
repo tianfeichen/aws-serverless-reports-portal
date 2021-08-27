@@ -1,0 +1,28 @@
+<h2 class="mat-h2">Invite User</h2>
+
+<div class="container">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input matInput [formControl]="firstName" placeholder="First Name" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [formControl]="lastName" placeholder="Last Name" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [formControl]="email" placeholder="Email" email required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [formControl]="company" placeholder="Company" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [formControl]="accountManager" placeholder="Account Manager">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Site</mat-label>
+      <select [formControl]="site" matNativeControl required>
+        <option *ngFor="let site of sites" [value]="site">{{site}}
+      </select>
+    </mat-form-field>
+    <button mat-raised-button class="mat-primary" type="submit">Invite</button>
+  </form>
+</div>

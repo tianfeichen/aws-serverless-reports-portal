@@ -1,0 +1,60 @@
+version: 0.2
+
+env:
+  variables:
+    stage: "release"
+    userPoolId: "ap-southeast-2_5kzknBe6o"
+    userPoolWebClientId: "3spk6iqcmv59hsecol94arif90"
+    identityPoolId: "ap-southeast-2:6741dc4e-9f93-43a4-acf3-d17a81f3cc16"
+  # parameter-store:
+    # accessKeyId: /CodeBuild/CustomerPortalSiteRelease/accessKeyId
+    # secretAccessKey: /CodeBuild/CustomerPortalSiteRelease/secretAccessKey
+  #git-credential-helper: yes
+
+phases:
+  install:
+    #If you use the Ubuntu standard image 2.0 or later, you must specify runtime-versions.
+    #If you specify runtime-versions and use an image other than Ubuntu standard image 2.0, the build fails.
+    runtime-versions:
+      dotnet: 2.2
+      # name: version
+    commands:
+      - npm install -g @angular/cli
+      - npm install -g serverless
+  pre_build:
+    commands:
+      - sed -i 's/#{stage}/'"$stage"'/g' Web/src/environments/environment.prod.ts
+      - sed -i 's/#{userPoolId}/'"$userPoolId"'/g' Web/src/environments/environment.prod.ts
+      - sed -i 's/#{userPoolWebClientId}/'"$userPoolWebClientId"'/g' Web/src/environments/environment.prod.ts
+      - sed -i 's/#{identityPoolId}/'"$identityPoolId"'/g' Web/src/environments/environment.prod.ts
+      # - sed -i 's/#{accessKeyId}/'"$accessKeyId"'/' Web/src/environments/environment.prod.ts
+      # - sed -i 's/#{secretAccessKey}/'"$secretAccessKey"'/' Web/src/environments/environment.prod.ts
+  build:
+    commands:
+      # build frontend
+      - cd Web
+      - npm install
+      - npm run build
+      - npm run testForBuild
+      - cd ..
+      # build lambda functions
+      - cd Services
+      - chmod a+x build.sh
+      - ./build.sh
+      - cd ..
+      # install serverless-finch
+      - npm install
+  post_build:
+    commands:
+      - serverless deploy --verbose --stage release
+      - serverless client deploy --no-policy-change --stage release --no-confirm
+artifacts:
+  files:
+    - Services/Services/bin/release/netcoreapp2.1/publish/**/*
+    # - location
+  #name: $(date +%Y-%m-%d)
+  discard-paths: yes
+  #base-directory: src
+#cache:
+  #paths:
+    # - paths

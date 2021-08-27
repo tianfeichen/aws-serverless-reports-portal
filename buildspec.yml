@@ -1,0 +1,60 @@
+version: 0.2
+
+env:
+  variables:
+    stage: "dev"
+    userPoolId: "us-east-1_h7myeGXdX"
+    userPoolWebClientId: "2mnbmsh9vcskp29livue0l4g74"
+    identityPoolId: "us-east-1:d7e7d275-8ad2-4a23-8c95-434ddd8529df"
+  # parameter-store:
+    # accessKeyId: /CodeBuild/CustomerPortalSiteDev/accessKeyId
+    # secretAccessKey: /CodeBuild/CustomerPortalSiteDev/secretAccessKey
+  #git-credential-helper: yes
+
+phases:
+  install:
+    #If you use the Ubuntu standard image 2.0 or later, you must specify runtime-versions.
+    #If you specify runtime-versions and use an image other than Ubuntu standard image 2.0, the build fails.
+    runtime-versions:
+      dotnet: 2.2
+      # name: version
+    commands:
+      - npm install -g @angular/cli
+      - npm install -g serverless
+  pre_build:
+    commands:
+      - sed -i 's/#{stage}/'"$stage"'/g' Web/src/environments/environment.prod.ts
+      - sed -i 's/#{userPoolId}/'"$userPoolId"'/g' Web/src/environments/environment.prod.ts
+      - sed -i 's/#{userPoolWebClientId}/'"$userPoolWebClientId"'/g' Web/src/environments/environment.prod.ts
+      - sed -i 's/#{identityPoolId}/'"$identityPoolId"'/g' Web/src/environments/environment.prod.ts
+      # - sed -i 's/#{accessKeyId}/'"$accessKeyId"'/' Web/src/environments/environment.prod.ts
+      # - sed -i 's/#{secretAccessKey}/'"$secretAccessKey"'/' Web/src/environments/environment.prod.ts
+  build:
+    commands:
+      # build frontend
+      - cd Web
+      - npm install
+      - npm run build
+      - npm run testForBuild
+      - cd ..
+      # build lambda functions
+      - cd Services
+      - chmod a+x build.sh
+      - ./build.sh
+      - cd ..
+      # install serverless-finch
+      - npm install
+  post_build:
+    commands:
+      - serverless deploy --verbose
+      - serverless client deploy --no-policy-change --no-confirm
+artifacts:
+  files:
+    - Services/Services/bin/release/netcoreapp2.1/publish/**/*
+    # - location
+  #name: $(date +%Y-%m-%d)
+  discard-paths: yes
+  #base-directory: src
+#cache:
+  #paths:
+    # - paths

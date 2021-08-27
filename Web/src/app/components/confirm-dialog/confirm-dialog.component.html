@@ -1,0 +1,22 @@
+<h3 class="primary-color">{{ title }}</h3>
+
+<div mat-dialog-content>
+  <div [innerHTML]="message"></div>
+</div>
+
+<div mat-dialog-actions>
+  <div *ngIf="secondaryButtonText" class="dialog-buttons-group">
+    <button class="cancel-button" mat-flat-button color="basic" id="secondaryButton" (click)="onClose()">{{ secondaryButtonText ? secondaryButtonText : 'Cancel' }}</button>
+    <button id="primaryButton" mat-flat-button color="primary" (click)="onClose('primary')">{{ primaryButtonText ? primaryButtonText : 'Confirm' }}</button>
+  </div>
+
+  <div *ngIf="!secondaryButtonText">
+    <button id="primaryButton" mat-flat-button color="primary" (click)="onClose('primary')">{{ primaryButtonText ? primaryButtonText : 'Confirm' }}</button>
+  </div>
+
+  <div *ngIf="!hideCloseButton">
+    <button id="closeButton" mat-flat-button (click)="onClose()">
+      <i class="fas fa-times-circle"></i> Close
+    </button>
+  </div>
+</div>
